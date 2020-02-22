@@ -28,8 +28,6 @@ class WorkerResource {
         return workerService.findAll();
     }
 
-
-
     @GetMapping("/{id}")
     private ResponseEntity<WorkerDto> findById(@PathVariable Long id) {
         return workerService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
