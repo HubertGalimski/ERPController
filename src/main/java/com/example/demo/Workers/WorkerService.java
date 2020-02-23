@@ -49,10 +49,15 @@ class WorkerService {
         return mapAndSaveUser(workerDto);
     }
 
+    protected void delete(Long id) {
+        workersRepository.deleteById(id);
+    }
+
     private WorkerDto mapAndSaveUser(WorkerDto worker) {
         Worker workerEntity = WorkerMapper.toEntity(worker);
         Worker savedWorker = workersRepository.save(workerEntity);
         return WorkerMapper.toDto(savedWorker);
     }
+
 
 }

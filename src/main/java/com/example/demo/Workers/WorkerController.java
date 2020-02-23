@@ -7,21 +7,20 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/api/workers")
-class WorkerResource {
+class WorkerController {
 
     private WorkerService workerService;
 
-
-    private WorkerResource(WorkerService workerService ) {
+    private WorkerController(WorkerService workerService) {
         this.workerService = workerService;
-
     }
 
-    @GetMapping(value = "",produces = {"application/hal+json"})
+    @GetMapping("")
     private List<WorkerDto> findAll(@RequestParam(required = false) String lastName) {
         if (lastName != null)
             return workerService.findByLastName(lastName);
@@ -50,6 +49,16 @@ class WorkerResource {
         }
         WorkerDto updatedUser = workerService.update(workerDto);
         return ResponseEntity.ok(updatedUser);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Optional<WorkerDto> worker = workerService.findById(id);
+        if (worker.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        workerService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
