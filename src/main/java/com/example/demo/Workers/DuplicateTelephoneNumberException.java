@@ -1,8 +1,8 @@
 package com.example.demo.Workers;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+class  DuplicateTelephoneNumberException extends RuntimeException {
 
-@ResponseStatus(value = HttpStatus.CONFLICT, reason = "Użytkownik z takim numerem telefonu już istnieje")
-class DuplicateTelephoneNumberException extends RuntimeException {
+    protected DuplicateTelephoneNumberException() {
+        super("Podany numer telefonu istnieje w bazie");
+    }
 }

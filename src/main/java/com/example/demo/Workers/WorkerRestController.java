@@ -9,14 +9,14 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
+//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RequestMapping("/api/workers")
-class WorkerController {
+class WorkerRestController {
 
     private WorkerService workerService;
 
-    private WorkerController(WorkerService workerService) {
+    private WorkerRestController(WorkerService workerService) {
         this.workerService = workerService;
     }
 
@@ -52,10 +52,10 @@ class WorkerController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    private ResponseEntity<Void> delete(@PathVariable Long id) {
         Optional<WorkerDto> worker = workerService.findById(id);
         if (worker.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Pracownik o takim id nie istnieje");
         }
         workerService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

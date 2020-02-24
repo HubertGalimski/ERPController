@@ -8,32 +8,32 @@ import java.util.stream.Collectors;
 @Service
 class WorkerService {
 
-    private WorkersRepository workersRepository;
+    private WorkerRepository workerRepository;
 
-    protected WorkerService(WorkersRepository workersRepository) {
-        this.workersRepository = workersRepository;
+    protected WorkerService(WorkerRepository workerRepository) {
+        this.workerRepository = workerRepository;
     }
 
     protected Optional<WorkerDto> findById(Long id) {
-        return workersRepository.findById(id).map(WorkerMapper::toDto);
+        return workerRepository.findById(id).map(WorkerMapper::toDto);
     }
 
     protected List<WorkerDto> findAll() {
-        return workersRepository.findAll()
+        return workerRepository.findAll()
                 .stream()
                 .map(WorkerMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     protected List<WorkerDto> findByLastName(String lastName) {
-        return workersRepository.findAllByLastNameContainingIgnoreCase(lastName)
+        return workerRepository.findAllByLastNameContainingIgnoreCase(lastName)
                 .stream()
                 .map(WorkerMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     protected WorkerDto save(WorkerDto workerDto) {
-        Optional<Worker> workerByTelephoneNumber = workersRepository.findByTelephoneNumber(workerDto.getTelephoneNumber());
+        Optional<Worker> workerByTelephoneNumber = workerRepository.findByTelephoneNumber(workerDto.getTelephoneNumber());
         workerByTelephoneNumber.ifPresent(u -> {
             throw new DuplicateTelephoneNumberException();
         });
@@ -41,23 +41,28 @@ class WorkerService {
     }
 
     protected WorkerDto update(WorkerDto workerDto) {
-        Optional<Worker> workerByTelephoneNumber = workersRepository.findByTelephoneNumber(workerDto.getTelephoneNumber());
+        Optional<Worker> workerByTelephoneNumber = workerRepository.findByTelephoneNumber(workerDto.getTelephoneNumber());
         workerByTelephoneNumber.ifPresent(s -> {
             if (!s.getId().equals(workerDto.getId()))
                 throw new DuplicateTelephoneNumberException();
+        });
+
+        Optional<Worker> workerByEmail = workerRepository.findByEmail(workerDto.getEmail());
+        workerByEmail.ifPresent(s -> {
+            if (!s.getId().equals(workerDto.getId()))
+                throw new DuplicateEmailException();
         });
         return mapAndSaveUser(workerDto);
     }
 
     protected void delete(Long id) {
-        workersRepository.deleteById(id);
+        workerRepository.deleteById(id);
     }
 
     private WorkerDto mapAndSaveUser(WorkerDto worker) {
         Worker workerEntity = WorkerMapper.toEntity(worker);
-        Worker savedWorker = workersRepository.save(workerEntity);
+        Worker savedWorker = workerRepository.save(workerEntity);
         return WorkerMapper.toDto(savedWorker);
     }
-
 
 }
