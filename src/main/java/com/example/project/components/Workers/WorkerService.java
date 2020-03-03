@@ -1,16 +1,17 @@
-package com.example.demo.Workers;
+package com.example.project.components.Workers;
 
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-class WorkerService {
+public class WorkerService {
 
     private WorkerRepository workerRepository;
 
-    protected WorkerService(WorkerRepository workerRepository) {
+    WorkerService(WorkerRepository workerRepository) {
         this.workerRepository = workerRepository;
     }
 
@@ -36,6 +37,10 @@ class WorkerService {
         Optional<Worker> workerByTelephoneNumber = workerRepository.findByTelephoneNumber(workerDto.getTelephoneNumber());
         workerByTelephoneNumber.ifPresent(u -> {
             throw new DuplicateTelephoneNumberException();
+        });
+        Optional<Worker> workerByEmail = workerRepository.findByEmail(workerDto.getEmail());
+        workerByEmail.ifPresent(u -> {
+            throw new DuplicateEmailException();
         });
         return mapAndSaveUser(workerDto);
     }

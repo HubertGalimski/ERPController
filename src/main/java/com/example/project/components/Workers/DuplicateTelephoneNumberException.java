@@ -1,8 +1,8 @@
-package com.example.demo.Workers;
+package com.example.project.components.Workers;
 
 class  DuplicateTelephoneNumberException extends RuntimeException {
 
-    protected DuplicateTelephoneNumberException() {
+    DuplicateTelephoneNumberException() {
         super("Podany numer telefonu istnieje w bazie");
     }
 }

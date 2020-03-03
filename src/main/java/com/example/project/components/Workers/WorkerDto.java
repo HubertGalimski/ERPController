@@ -1,4 +1,4 @@
-package com.example.demo.Workers;
+package com.example.project.components.Workers;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +12,6 @@ class WorkerDto {
     private String lastName;
     private String email;
     private String telephoneNumber;
+
 
 }

@@ -1,4 +1,5 @@
-package com.example.demo.Workers;
+package com.example.project.components.Workers;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

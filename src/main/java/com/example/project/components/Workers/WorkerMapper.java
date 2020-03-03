@@ -1,8 +1,8 @@
-package com.example.demo.Workers;
+package com.example.project.components.Workers;
 
 class WorkerMapper {
 
-    protected static WorkerDto toDto(Worker worker) {
+    static WorkerDto toDto(Worker worker) {
         WorkerDto workerDto = new WorkerDto();
         workerDto.setId(worker.getId());
         workerDto.setFirstName(worker.getFirstName());
@@ -12,7 +12,7 @@ class WorkerMapper {
         return workerDto;
     }
 
-    protected static Worker toEntity(WorkerDto workerDto) {
+    static Worker toEntity(WorkerDto workerDto) {
         Worker worker = new Worker();
         worker.setId(workerDto.getId());
         worker.setFirstName(workerDto.getFirstName());
