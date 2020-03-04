@@ -1,9 +1,7 @@
 package com.example.project.components.Workers;
 
 import com.example.project.components.Evaluations.Evaluation;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;

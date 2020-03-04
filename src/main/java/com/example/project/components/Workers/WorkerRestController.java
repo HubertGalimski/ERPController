@@ -1,6 +1,6 @@
 package com.example.project.components.Workers;
 
-
+import com.example.project.components.Evaluations.EvaluationDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +29,13 @@ class WorkerRestController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<WorkerDto> findById(@PathVariable Long id) {
+    private ResponseEntity<WorkerDto> findWorkerById(@PathVariable Long id) {
         return workerService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/evaluations")
+    private List<EvaluationDto> findEvaluationsByWorker(@PathVariable Long id) {
+        return workerService.showEvaluationsByWorker(id);
     }
 
     @PostMapping("")

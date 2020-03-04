@@ -1,4 +1,4 @@
-package com.example.project.components.Workers;
+package com.example.project.components.ExceptionsAndAdvices;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-class DuplicateEmailAdvice {
-
+public class WorkerNotFoundAdvice {
     @ResponseBody
-    @ExceptionHandler(value = DuplicateEmailException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    String duplicateEmailNumberHandler(DuplicateEmailException ex){
+    @ExceptionHandler(value = WorkerNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String duplicateTelephoneNumberHandler(WorkerNotFoundException ex){
         return ex.getMessage();
     }
 }
+
